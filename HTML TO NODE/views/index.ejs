@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recipe List</title>
+    <link rel="stylesheet" href="/style.css">
+</head>
+<body>
+    <h1>Recipe List</h1>
+    <div id="recipe-list"></div>
+    <script>
+        const loadRecipes = async () => {
+            try {
+                const response = await fetch('/recipe/all');
+                const recipes = await response.json();
+                const list = document.getElementById('recipe-list');
+                recipes.forEach(({ name, description, preparationTime, cookingTime, imageUrl, country, veg }) => {
+                    list.innerHTML += `
+                        <div>
+                            <h2>${name}</h2>
+                            <p>${description}</p>
+                            <p>Prep Time: ${preparationTime}</p>
+                            <p>Cook Time: ${cookingTime}</p>
+                            <img src="${imageUrl}" alt="${name}" width="200">
+                            <p>Country: ${country}</p>
+                            <p>Vegetarian: ${veg ? 'Yes' : 'No'}</p>
+                        </div>`;
+                });
+            } catch (error) {
+                console.error('Error fetching recipes:', error);
+            }
+        };
+
+        loadRecipes();
+    </script>
+</body>
+</html>
