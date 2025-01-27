@@ -11,6 +11,8 @@ const dbConnection = async () => {
   } 
   catch (error) {
     console.log(error.message);
+    console.log('heloo');
+    
   }
   
 };
